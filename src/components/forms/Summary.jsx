@@ -21,13 +21,9 @@ const Summary = () => {
   };
 
   useEffect(() => {
-    console.log(selectedSummaryIndex);
-
     if (selectedSummaryIndex !== null && selectedSummaryIndex >= 0) {
       const summary =
         AIGeneratedSummaryList[selectedSummaryIndex].summary ?? "";
-      console.log(summary);
-
       setResumeInfo({
         ...resumeInfo,
         content: { ...resumeInfo.content, summary },
