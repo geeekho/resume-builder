@@ -21,21 +21,4 @@ const supabaseClient = (token) => {
   );
 };
 
-const insertTasks = async (token) => {
-  const supabase = supabaseClient(token);
-
-  const { data, error } = await supabase.from("tasks").insert({
-    name: "dfsdfsd",
-  });
-  console.log("error");
-  console.log(error);
-  console.log("data");
-  console.log(data);
-};
-const fetchTasks = async (token) => {
-  const supabase = supabaseClient(token);
-  const { data, error } = await supabase.from("tasks").select();
-  return data;
-};
-
-export { supabaseClient, fetchTasks, insertTasks };
+export { supabaseClient };

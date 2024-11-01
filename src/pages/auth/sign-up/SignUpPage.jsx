@@ -1,7 +1,7 @@
 import { Spinner } from "@/components/ui/Spinner";
-import { SignIn, useUser } from "@clerk/clerk-react";
+import { SignUp, useUser } from "@clerk/clerk-react";
 
-const SignInPage = () => {
+const SignUpPage = () => {
   const { isLoaded } = useUser();
 
   return !isLoaded ? (
@@ -10,9 +10,9 @@ const SignInPage = () => {
     </div>
   ) : (
     <div className="mx-auto my-20 flex items-center justify-center">
-      <SignIn />
+      <SignUp />
     </div>
   );
 };
 
-export default SignInPage;
+export default SignUpPage;

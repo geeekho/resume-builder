@@ -23,7 +23,7 @@ const Dashboard = () => {
     getResumeList();
   }, [getToken]);
   return (
-    <div className="p-10 md:px-20 lg:px-32">
+    <div className="md:px-20 lg:px-32">
       <h2 className="text-3xl font-bold">My Resumes</h2>
       <span>start creating your AI resume to land your dream job!</span>
       <div className="mt-10 grid h-[280px] grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-5">

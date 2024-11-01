@@ -14,7 +14,7 @@ import { toast } from "sonner";
 const FormSection = () => {
   const { resumeInfo } = useContext(ResumeInfoContext);
 
-  const [activeFormIndex, setActiveFormIndex] = useState(2);
+  const [activeFormIndex, setActiveFormIndex] = useState(3);
   const [isLoading, setIsLoading] = useState(false);
 
   const { getToken } = useAuth();
@@ -66,7 +66,7 @@ const FormSection = () => {
   };
 
   return (
-    <div>
+    <div className="h-full w-full">
       <div className="flex items-center justify-between">
         <Button variant="outline" className="flex gap-2" size="sm">
           <LayoutGrid /> Theme
