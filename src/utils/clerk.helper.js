@@ -6,4 +6,23 @@ const getClerkKey = () => {
   }
   return PUBLISHABLE_KEY;
 };
-export { getClerkKey };
+
+const getSignUpLink = () => {
+  const SIGN_UP_URL = import.meta.env.VITE_CLERK_SIGN_UP_URL;
+
+  if (!SIGN_UP_URL) {
+    throw new Error("Missing sign up link");
+  }
+  return SIGN_UP_URL;
+};
+
+const getSignInLink = () => {
+  const SIGN_IN_URL = import.meta.env.VITE_CLERK_SIGN_IN_URL;
+
+  if (!SIGN_IN_URL) {
+    throw new Error("Missing sign in link");
+  }
+  return SIGN_IN_URL;
+};
+
+export { getClerkKey, getSignUpLink, getSignInLink };

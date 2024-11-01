@@ -1,25 +1,14 @@
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
 import { useAuth, UserButton } from "@clerk/clerk-react";
+import { useTheme } from "@/providers/ThemeProvider";
+import { Moon, Sun } from "lucide-react";
+import { Separator } from "../ui/separator";
 
 const Header = () => {
   const navigate = useNavigate();
   const { isSignedIn } = useAuth();
-
-  // const fetchData = async (e) => {
-  //   try {
-  //     e.preventDefault();
-  //     const token = await getToken({
-  //       template: "supabase",
-  //     });
-  //     if (token) {
-  //       const data = await fetchTasks(token);
-  //       console.log(data);
-  //     }
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
+  const { setTheme, theme } = useTheme();
 
   const goTo = (path) => navigate(path);
   return (
@@ -30,6 +19,18 @@ const Header = () => {
           <Button variant="outline" onClick={() => goTo("/dashboard")}>
             Dashboard
           </Button>
+          <Button
+            variant="ghost"
+            className="flex items-center justify-center"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          >
+            {theme === "dark" ? (
+              <Sun className="h-4 w-4" />
+            ) : (
+              <Moon className="h-4 w-4" />
+            )}
+          </Button>
+          <Separator orientation="vertical" />
           <UserButton />
         </div>
       ) : (
