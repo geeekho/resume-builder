@@ -2,9 +2,12 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import Router from "./Router";
 import ClerkWrapper from "./Clerk";
+import ThemeProvider from "./providers/ThemeProvider";
 
 createRoot(document.getElementById("root")).render(
-  <ClerkWrapper>
-    <Router />
-  </ClerkWrapper>,
+  <ThemeProvider>
+    <ClerkWrapper>
+      <Router />
+    </ClerkWrapper>
+  </ThemeProvider>,
 );

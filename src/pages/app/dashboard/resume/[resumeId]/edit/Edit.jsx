@@ -18,7 +18,6 @@ const Edit = () => {
       });
       if (token) {
         const data = await fetchResumeById(token, resumeId);
-        console.log(data);
         setResumeInfo(data);
       }
     };
@@ -27,7 +26,7 @@ const Edit = () => {
 
   return (
     <ResumeInfoContext.Provider value={{ resumeInfo, setResumeInfo }}>
-      <div className="grid grid-cols-1 gap-10 p-10 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
         {/* Form Section */}
         <FormSection />
         {/* Preview Section */}

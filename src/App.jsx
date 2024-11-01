@@ -12,7 +12,9 @@ function App() {
   return (
     <>
       <Header />
-      <Outlet />
+      <div className="p-10">
+        <Outlet />
+      </div>
       <Toaster position="bottom-left" closeButton />
     </>
   );

@@ -4,15 +4,17 @@ import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 import { Brain } from "lucide-react";
 import { chatSession } from "@/service/AIModel";
+import { toast } from "sonner";
 
 const prompt =
-  "Job Title: {jobTitle} , Depends on job title give me list of  summery for 3 experience level, Mid Level and Freasher level in 3 -4 lines in array format, With summery and experience_level Field in JSON Format";
+  "Job Title: {jobTitle} , Depends on job title give me list of  summery for 3 experience level, Mid Level and Freasher level in 3 -4 lines in array format, With summery and experience_level Field in JSON Format, and do not repeat your previous answer";
 
 const Summary = () => {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
 
   const [AIGeneratedSummaryList, setAIGeneratedSummaryList] = useState([]);
   const [selectedSummaryIndex, setSelectedSummaryIndex] = useState(null);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -35,16 +37,22 @@ const Summary = () => {
   const selectSummary = (index) => setSelectedSummaryIndex(index);
 
   const handleGenerateSummary = async (e) => {
+    setIsGenerating(true);
     e.preventDefault();
     const PROMPT = prompt.replace(
       "{jobTitle}",
       resumeInfo?.content.jobTitle ?? "",
     );
-    const result = await chatSession.sendMessage(PROMPT);
-    if (!!result && !!result.response && result.response.text().length > 0) {
-      console.log(result.response.text());
-      setAIGeneratedSummaryList(JSON.parse(result.response.text()));
-      setSelectedSummaryIndex(0);
+    try {
+      const result = await chatSession.sendMessage(PROMPT);
+      if (!!result && !!result.response && result.response.text().length > 0) {
+        setAIGeneratedSummaryList(JSON.parse(result.response.text()));
+        setSelectedSummaryIndex(0);
+      }
+    } catch {
+      toast.warning("something went wrong please try again");
+    } finally {
+      setIsGenerating(false);
     }
   };
 
@@ -57,11 +65,11 @@ const Summary = () => {
           <Button
             onClick={handleGenerateSummary}
             variant="outline"
-            className="flex gap-2 border-primary text-primary hover:text-primary"
+            className={`flex gap-2 border-primary text-primary hover:text-primary ${isGenerating ? "animate-pulse" : ""}`}
             size="sm"
           >
             <Brain className="h-4 w-4" />
-            Generate From AI
+            {isGenerating ? "Generating..." : "Generate From AI"}
           </Button>
         </div>
         <Textarea
@@ -70,7 +78,7 @@ const Summary = () => {
           rows="7"
           name="summary"
           id="summary"
-          defaultValue={resumeInfo?.content.summary ?? ""}
+          value={resumeInfo?.content.summary ?? ""}
           onChange={handleInputChange}
         />
       </div>
