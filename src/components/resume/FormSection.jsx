@@ -14,7 +14,7 @@ import { toast } from "sonner";
 const FormSection = () => {
   const { resumeInfo } = useContext(ResumeInfoContext);
 
-  const [activeFormIndex, setActiveFormIndex] = useState(4);
+  const [activeFormIndex, setActiveFormIndex] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
   const { getToken } = useAuth();
