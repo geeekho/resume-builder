@@ -1,14 +1,21 @@
 import { ResumeInfoContext } from "@/context/ResumeInfoContext";
-import { useCallback, useContext, useEffect, useId, useState } from "react";
+import {
+  memo,
+  useCallback,
+  useContext,
+  useEffect,
+  useId,
+  useState,
+} from "react";
 import EducationFields from "../custom/EducationFields";
 import { Button } from "../ui/button";
 
 const formField = {
-  universityName: "",
+  universityName: "new",
   startDate: "",
   endDate: "",
-  degree: "",
-  major: "",
+  degree: "new",
+  major: "new",
   description:
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud",
 };
@@ -16,7 +23,9 @@ const formField = {
 const Education = () => {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
 
-  const [educationList, setEducationList] = useState([]);
+  const [educationList, setEducationList] = useState(
+    resumeInfo?.content.education ?? [formField],
+  );
 
   const id = useId();
 
@@ -38,7 +47,13 @@ const Education = () => {
   );
 
   const handleAddNewExperience = () => {
-    setEducationList([formField, ...educationList]);
+    const newValue = {
+      ...resumeInfo?.content,
+      education: [formField, ...educationList],
+    };
+
+    setResumeInfo({ ...resumeInfo, content: newValue });
+
     document.getElementById("app-container").scrollTo({
       top: 100,
       behavior: "smooth",
@@ -88,4 +103,4 @@ const Education = () => {
   );
 };
 
-export default Education;
+export default memo(Education);
