@@ -6,6 +6,19 @@
   touch-action: manipulation;
 }
 
+body,
+html {
+  overflow: hidden;
+  height: 100%;
+  max-height: 100%;
+  margin: 0;
+}
+
+#root {
+  height: 100%;
+  max-height: 100%;
+}
+
 .scroll-bar::-webkit-scrollbar {
   width: 10px;
 }

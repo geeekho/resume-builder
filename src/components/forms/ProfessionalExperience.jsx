@@ -71,7 +71,7 @@ const ProfessionalExperience = () => {
 
   const handleAddNewExperience = () => {
     setExperienceList([formField, ...experienceList]);
-    window.scrollTo({
+    document.getElementById("app-container").scrollTo({
       top: 100,
       behavior: "smooth",
     });
@@ -122,7 +122,7 @@ const ProfessionalExperience = () => {
           className="capitalize text-primary"
           onClick={handleAddNewExperience}
         >
-          + add more experience
+          + add experience
         </Button>
         <Button
           disabled={experienceList.length === 1}
