@@ -12,11 +12,10 @@ function Home() {
         <div className="mx-auto max-w-screen-xl px-4 py-8 text-center lg:px-12 lg:py-16">
           <a
             href="#"
-            target="_blank"
             className="mb-7 inline-flex items-center justify-between rounded-full bg-gray-100 px-1 py-1 pr-4 text-sm text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
           >
             <span className="mr-3 rounded-full bg-primary px-4 py-1.5 text-xs text-white">
-              New
+              Coming Soon
             </span>{" "}
             <span className="text-sm font-medium">Visit my portfolio</span>
             <svg
