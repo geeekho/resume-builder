@@ -1,17 +1,21 @@
-import { memo, useMemo } from "react";
+import { memo, useId, useMemo } from "react";
 import { Input } from "../ui/input";
 
 import { Rating, ThinStar } from "@smastrom/react-rating";
 
 import "@smastrom/react-rating/style.css";
+import { Button } from "../ui/button";
+import { Trash2 } from "lucide-react";
 
 const customStyles = {
   itemShapes: ThinStar,
   activeFillColor: "hsl(var(--primary))",
-  inactiveFillColor: "hsl(var(--secondary-foreground))",
+  inactiveFillColor: "hsl(var(--input))",
 };
 
-const SkillsFields = ({ index, skill, handleInputChange }) => {
+const SkillsFields = ({ skill, handleInputChange, handleRemoveSkill }) => {
+  const id = useId();
+
   const skillName = useMemo(() => {
     let value = "";
     switch (skill.rating / 10 / 2) {
@@ -37,14 +41,27 @@ const SkillsFields = ({ index, skill, handleInputChange }) => {
   }, [skill.rating]);
 
   return (
-    <div className="mb-2 flex w-full flex-row flex-wrap items-center justify-start rounded-lg border p-3">
+    <div
+      key={id}
+      className="relative mb-2 flex w-full flex-row flex-wrap items-center justify-start rounded-lg border p-3"
+    >
+      <Button
+        className="absolute -right-4 -top-4 h-7 w-7 bg-destructive"
+        onClick={() => handleRemoveSkill(skill.id)}
+      >
+        <Trash2 />
+      </Button>
       {/* skill name */}
       <div className="w-[min(300px,100%)]">
-        <span className="text-xs capitalize">name</span>
+        <label htmlFor={`name-${skill.id}`} className="text-xs capitalize">
+          name
+        </label>
         <Input
+          id={`name-${skill.id}`}
+          name="name"
           required
-          onChange={(e) => handleInputChange(e.target.value, "name", index)}
-          value={skill?.name ?? ""}
+          onChange={(e) => handleInputChange(e.target.value, "name", skill.id)}
+          defaultValue={skill?.name}
         />
       </div>
       {/* rating */}
@@ -54,7 +71,7 @@ const SkillsFields = ({ index, skill, handleInputChange }) => {
           style={{ maxWidth: 120 }}
           value={skill?.rating / 10 / 2}
           onChange={(selectedValue) =>
-            handleInputChange(selectedValue * 2 * 10, "rating", index)
+            handleInputChange(selectedValue * 2 * 10, "rating", skill.id)
           }
           itemStyles={customStyles}
         />

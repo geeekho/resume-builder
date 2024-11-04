@@ -1,16 +1,16 @@
-import { ResumeInfoContext } from "@/context/ResumeInfoContext";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 import { Brain } from "lucide-react";
 import { chatSession } from "@/service/AIModel";
 import { toast } from "sonner";
+import { useMyContext } from "@/context/ProfileContext";
 
 const prompt =
-  "Job Title: {jobTitle} , Depends on job title give me list of  summery for 3 experience level, Mid Level and Freasher level in 3 -4 lines in array format, With summery and experience_level Field in JSON Format, and do not repeat your previous answer";
+  "Job Title: {jobTitle} , Depends on job title give me list of  summery for 3 experience level, Mid Level and Entry level in 3 -4 lines in array format, With summery and experience_level Field in JSON Format";
 
 const Summary = () => {
-  const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
+  const { state: resumeInfo, dispatch } = useMyContext();
 
   const [AIGeneratedSummaryList, setAIGeneratedSummaryList] = useState([]);
   const [selectedSummaryIndex, setSelectedSummaryIndex] = useState(null);
@@ -18,17 +18,16 @@ const Summary = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    const newValue = { ...resumeInfo?.content, [name]: value };
-    setResumeInfo({ ...resumeInfo, content: newValue });
+    dispatch({ type: "UPDATE_CONTENT_FIELD", data: { field: name, value } });
   };
 
   useEffect(() => {
     if (selectedSummaryIndex !== null && selectedSummaryIndex >= 0) {
       const summary =
         AIGeneratedSummaryList[selectedSummaryIndex].summary ?? "";
-      setResumeInfo({
-        ...resumeInfo,
-        content: { ...resumeInfo.content, summary },
+      dispatch({
+        type: "UPDATE_CONTENT_FIELD",
+        data: { field: "summary", value: summary },
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -46,6 +45,8 @@ const Summary = () => {
     try {
       const result = await chatSession.sendMessage(PROMPT);
       if (!!result && !!result.response && result.response.text().length > 0) {
+        console.log(result.response.text());
+
         setAIGeneratedSummaryList(JSON.parse(result.response.text()));
         setSelectedSummaryIndex(0);
       }
@@ -82,7 +83,7 @@ const Summary = () => {
           onChange={handleInputChange}
         />
       </div>
-      {AIGeneratedSummaryList && (
+      {AIGeneratedSummaryList && AIGeneratedSummaryList.length > 0 && (
         <div className="my-5">
           <h2 className="text-lg font-bold">Suggestions</h2>
           {AIGeneratedSummaryList?.map((item, index) => (

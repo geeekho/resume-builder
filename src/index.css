@@ -55,6 +55,7 @@ html {
     --card-foreground: 224 71.4% 4.1%;
     --popover: 0 0% 100%;
     --popover-foreground: 224 71.4% 4.1%;
+    --default-resume: 262.1 83.3% 57.8%;
     --primary: 262.1 83.3% 57.8%;
     --primary-foreground: 210 20% 98%;
     --secondary: 220 14.3% 95.9%;
@@ -83,6 +84,7 @@ html {
     --card-foreground: 210 20% 98%;
     --popover: 224 71.4% 4.1%;
     --popover-foreground: 210 20% 98%;
+    --default-resume: 263.4 70% 50.4%;
     --primary: 263.4 70% 50.4%;
     --primary-foreground: 210 20% 98%;
     --secondary: 215 27.9% 16.9%;
