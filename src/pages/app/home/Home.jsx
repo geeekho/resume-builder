@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { AtomIcon, Edit, Share2 } from "lucide-react";
 import React from "react";
 
@@ -10,7 +11,7 @@ function Home() {
       <section className="z-50">
         <div className="mx-auto max-w-screen-xl px-4 py-8 text-center lg:px-12 lg:py-16">
           <a
-            href="/"
+            href="#"
             target="_blank"
             className="mb-7 inline-flex items-center justify-between rounded-full bg-gray-100 px-1 py-1 pr-4 text-sm text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
           >
@@ -189,7 +190,7 @@ function Home() {
         <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           <a
             className="block rounded-xl border p-8 shadow-xl transition hover:border-pink-500/10 hover:shadow-pink-500/10 dark:bg-gray-800"
-            href="/"
+            href="#"
           >
             <AtomIcon className="h-8 w-8" />
 
@@ -206,7 +207,7 @@ function Home() {
 
           <a
             className="block rounded-xl border p-8 shadow-xl transition hover:border-pink-500/10 hover:shadow-pink-500/10 dark:bg-gray-800"
-            href="/"
+            href="#"
           >
             <Edit className="h-8 w-8" />
 
@@ -223,7 +224,7 @@ function Home() {
 
           <a
             className="block rounded-xl border p-8 shadow-xl transition hover:border-pink-500/10 hover:shadow-pink-500/10 dark:bg-gray-800"
-            href="/"
+            href="#"
           >
             <Share2 className="h-8 w-8" />
 
