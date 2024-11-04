@@ -25,4 +25,16 @@ const getSignInLink = () => {
   return SIGN_IN_URL;
 };
 
-export { getClerkKey, getSignUpLink, getSignInLink };
+const getFallbackUrls = () => {
+  const SIGN_IN_REDIRECT_URL = import.meta.env
+    .VITE_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL;
+  const SIGN_UP_REDIRECT_URL = import.meta.env
+    .VITE_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL;
+
+  return {
+    signIn: SIGN_IN_REDIRECT_URL ?? "/",
+    signUp: SIGN_UP_REDIRECT_URL ?? "/",
+  };
+};
+
+export { getClerkKey, getSignUpLink, getSignInLink, getFallbackUrls };

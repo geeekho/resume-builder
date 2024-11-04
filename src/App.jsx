@@ -10,13 +10,16 @@ function App() {
   });
 
   return (
-    <>
+    <div
+      className="scroll-bar max-h-full min-h-full overflow-y-auto overflow-x-hidden"
+      id="app-container"
+    >
       <Header />
-      <div className="p-10">
+      <div className="h-full w-full p-10">
         <Outlet />
       </div>
       <Toaster position="bottom-left" closeButton />
-    </>
+    </div>
   );
 }
 

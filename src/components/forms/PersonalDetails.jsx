@@ -1,14 +1,17 @@
-import { ResumeInfoContext } from "@/context/ResumeInfoContext";
-import { useContext } from "react";
+import { useCallback } from "react";
 import { Input } from "../ui/input";
+import { useMyContext } from "@/context/ProfileContext";
 
 const PersonalDetails = () => {
-  const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    const newValue = { ...resumeInfo?.content, [name]: value };
-    setResumeInfo({ ...resumeInfo, content: newValue });
-  };
+  const { state: resumeInfo, dispatch } = useMyContext();
+
+  const handleInputChange = useCallback(
+    (e) => {
+      const { name, value } = e.target;
+      dispatch({ type: "UPDATE_CONTENT_FIELD", data: { field: name, value } });
+    },
+    [dispatch],
+  );
 
   return (
     <>

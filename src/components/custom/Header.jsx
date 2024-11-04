@@ -1,5 +1,5 @@
 import { Button } from "../ui/button";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth, UserButton } from "@clerk/clerk-react";
 import { useTheme } from "@/providers/ThemeProvider";
 import { Moon, Sun } from "lucide-react";
@@ -13,7 +13,9 @@ const Header = () => {
   const goTo = (path) => navigate(path);
   return (
     <div className="flex justify-between p-3 px-5 shadow-md">
-      <img src="/logo.svg" alt="logo" height={100} width={100} />
+      <Link to="/">
+        <img src="/logo.svg" alt="logo" height={80} width={80} />
+      </Link>
       {isSignedIn ? (
         <div className="flex items-center gap-x-2">
           <Button variant="outline" onClick={() => goTo("/dashboard")}>

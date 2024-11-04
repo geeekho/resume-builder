@@ -33,10 +33,33 @@ const AddResume = () => {
       });
       if (!!token) {
         const resumeObj = Object.assign(
-          { title: resumeTitle },
           {
+            title: resumeTitle,
             email: user.primaryEmailAddress.emailAddress,
             username: user.fullName,
+          },
+          {
+            content: {
+              username: "",
+              id: "",
+              resume_id: "",
+              user_id: "",
+              email: "",
+              title: "",
+              content: {
+                email: "",
+                phone: "",
+                skills: [],
+                address: "",
+                summary: "",
+                jobTitle: "",
+                lastName: "",
+                education: [],
+                firstName: "",
+                experience: [],
+                themeColor: "",
+              },
+            },
           },
         );
         const resume_id = await createResume(token, resumeObj);
