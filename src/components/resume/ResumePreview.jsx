@@ -1,34 +1,36 @@
-import { ResumeInfoContext } from "@/context/ResumeInfoContext";
-import { useContext, useMemo } from "react";
+import { useMemo } from "react";
 import PersonalDetailsPreview from "../preview/PersonalDetailsPreview";
 import SummaryPreview from "../preview/SummaryPreview";
 import EducationPreview from "../preview/EducationPreview";
 import SkillsPreview from "../preview/SkillsPreview";
 import ExperiencePreview from "../preview/ExperiencePreview";
 
-const ResumePreview = () => {
-  const { resumeInfo } = useContext(ResumeInfoContext);
-
+const ResumePreview = ({ resumeInfo }) => {
   const resume = useMemo(() => resumeInfo?.content, [resumeInfo]);
+  const color = useMemo(() => {
+    return !!resume.themeColor && resume.themeColor != ""
+      ? resume.themeColor
+      : "hsl(var(--default-resume))";
+  }, [resume.themeColor]);
 
   return (
     <div
       className="h-full border-t-[20px] p-14 shadow-lg"
-      style={{ borderColor: resume?.themeColor }}
+      style={{ borderColor: color }}
     >
       {/* Personal Details */}
-      <PersonalDetailsPreview resumeInfo={resume} />
+      <PersonalDetailsPreview resumeInfo={resume} color={color} />
 
       {/* Summary */}
       <SummaryPreview resumeInfo={resume} />
 
       {/* Professional experience */}
-      <ExperiencePreview resumeInfo={resume} />
+      <ExperiencePreview resumeInfo={resume} color={color} />
 
       {/* Education */}
-      <EducationPreview resumeInfo={resume} />
+      <EducationPreview resumeInfo={resume} color={color} />
       {/* Skills */}
-      <SkillsPreview resumeInfo={resume} />
+      <SkillsPreview resumeInfo={resume} color={color} />
     </div>
   );
 };

@@ -1,14 +1,7 @@
-import { ResumeInfoContext } from "@/context/ResumeInfoContext";
-import {
-  memo,
-  useCallback,
-  useContext,
-  useEffect,
-  useId,
-  useState,
-} from "react";
+import { memo, useCallback, useEffect, useId, useState } from "react";
 import SkillsFields from "../custom/SkillsFields";
 import { Button } from "../ui/button";
+import { useMyContext } from "@/context/ProfileContext";
 
 const formField = {
   name: "",
@@ -16,64 +9,59 @@ const formField = {
 };
 
 const Skills = () => {
-  const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
+  const { state: resumeInfo, dispatch } = useMyContext();
 
-  const [skillsList, setSkillsList] = useState(
-    resumeInfo?.content.skills ?? [formField],
-  );
+  const [skillsList, setSkillsList] = useState([formField]);
 
   const id = useId();
 
   useEffect(() => {
-    const skills = resumeInfo?.content.skills ?? [formField];
+    const skills = resumeInfo?.content?.skills ?? [formField];
     setSkillsList(skills);
   }, [resumeInfo]);
 
   const handleInputChange = useCallback(
-    (value, name, index) => {
-      const newEntriesList = skillsList.slice();
-      newEntriesList[index][name] = value;
-      console.log(newEntriesList[index]);
-
-      const newValue = { ...resumeInfo?.content, skills: newEntriesList };
-      setResumeInfo({ ...resumeInfo, content: newValue });
+    (value, name, id) => {
+      dispatch({
+        type: "UPDATE_SKILL",
+        payload: { id, [name]: value },
+      });
     },
-    [skillsList, resumeInfo],
+    [dispatch],
   );
 
   const handleAddNewSkill = () => {
-    const newValue = {
-      ...resumeInfo?.content,
-      skills: [formField, ...skillsList],
-    };
-
-    setResumeInfo({ ...resumeInfo, content: newValue });
-    document.getElementById("app-container").scrollTo({
-      top: 100,
-      behavior: "smooth",
+    dispatch({
+      type: "ADD_SKILL",
+      skill: {
+        id: skillsList.length + 1,
+        name: "",
+        rating: 0,
+      },
     });
   };
-  const handleRemoveSkill = () => {
-    if (skillsList.length === 1) return;
-    const newValue = {
-      ...resumeInfo?.content,
-      skills: resumeInfo?.content.skills.slice(0, -1),
-    };
-    setResumeInfo({ ...resumeInfo, content: newValue });
-  };
+  const handleRemoveSkill = useCallback(
+    (id) => {
+      dispatch({
+        type: "REMOVE_SKILL",
+        payload: { id },
+      });
+    },
+    [dispatch],
+  );
 
   return (
     <>
       <h2 className="text-lg font-bold capitalize">Skills</h2>
       <span className="capitalize">add your top skills</span>
 
-      <div>
-        {skillsList.map((skill, index) => (
+      <div className="flex flex-col flex-nowrap gap-y-3">
+        {skillsList.map((skill) => (
           <SkillsFields
-            key={`${index}-skills}-${id}`}
-            index={index}
+            key={`${skill.id}-skills}-${id}`}
             skill={skill}
             handleInputChange={handleInputChange}
+            handleRemoveSkill={handleRemoveSkill}
           />
         ))}
       </div>
@@ -84,14 +72,6 @@ const Skills = () => {
           onClick={handleAddNewSkill}
         >
           + add new skill
-        </Button>
-        <Button
-          disabled={skillsList.length === 1}
-          variant="outline"
-          className="capitalize text-primary"
-          onClick={handleRemoveSkill}
-        >
-          - remove skill
         </Button>
       </div>
     </>
