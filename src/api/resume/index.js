@@ -1,4 +1,5 @@
 import { createResume } from "./createResume";
+import { deleteResume } from "./deleteResume";
 import {
   fetchResumeById,
   fetchResumes,
@@ -12,4 +13,5 @@ export {
   fetchResumeById,
   updateResume,
   fetchPublicResumeById,
+  deleteResume,
 };

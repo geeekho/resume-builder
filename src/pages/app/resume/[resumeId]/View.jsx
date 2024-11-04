@@ -1,7 +1,6 @@
-import { fetchPublicResumeById, fetchResumeById } from "@/api/resume";
+import { fetchPublicResumeById } from "@/api/resume";
 import ResumePreview from "@/components/resume/ResumePreview";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@clerk/clerk-react";
 import { ArrowDownToLine, Share2 } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -12,7 +11,6 @@ import { toast } from "sonner";
 
 const View = () => {
   const { resumeId } = useParams();
-  const { getToken } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [resumeInfo, setResumeinfo] = useState(null);
 

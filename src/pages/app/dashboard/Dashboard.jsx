@@ -1,9 +1,10 @@
 import { useAuth } from "@clerk/clerk-react";
 import AddResume from "../../../components/dashboard/AddResume";
-import { fetchResumes } from "@/api/resume";
+import { deleteResume, fetchResumes } from "@/api/resume";
 import { useEffect, useState } from "react";
 import ResumeItemCard from "@/components/resume/ResumeItemCard";
 import ResumeSkeleton from "@/components/dashboard/ResumeSkeleton";
+import { toast } from "sonner";
 
 const Dashboard = () => {
   const { getToken } = useAuth();
@@ -25,6 +26,20 @@ const Dashboard = () => {
     };
     getResumeList();
   }, [getToken]);
+
+  const handleDeleteResume = async (id) => {
+    try {
+      const token = await getToken({
+        template: "supabase",
+      });
+      await deleteResume(token, id);
+      setResumeList((resumeList) => resumeList.filter((item) => item.id != id));
+      toast.success("resume deleted successfully");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <div className="md:px-20 lg:px-32">
       <h2 className="text-3xl font-bold">My Resumes</h2>
@@ -40,7 +55,10 @@ const Dashboard = () => {
         ) : (
           resumeList.map((resume) => (
             <div key={resume.id}>
-              <ResumeItemCard item={resume} />
+              <ResumeItemCard
+                item={resume}
+                handleDeleteResume={handleDeleteResume}
+              />
             </div>
           ))
         )}
