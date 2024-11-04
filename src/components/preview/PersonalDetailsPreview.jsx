@@ -25,7 +25,7 @@ const PersonalDetailsPreview = ({ resumeInfo, color }) => {
         {resumeInfo?.address}
       </h2>
       <div
-        className="flex justify-between text-xs font-normal"
+        className="flex flex-wrap justify-between text-xs font-normal"
         style={{ color: color }}
       >
         <h2>
