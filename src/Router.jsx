@@ -6,6 +6,7 @@ import AuthWrapper from "./AuthWrapper";
 import Dashboard from "./pages/app/dashboard/Dashboard";
 import Edit from "./pages/app/dashboard/resume/[resumeId]/edit/Edit";
 import SignUpPage from "./pages/auth/sign-up/SignUpPage";
+import View from "./pages/app/resume/[resumeId]/View";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,14 @@ const router = createBrowserRouter([
         element: (
           <AuthWrapper isProtected={true}>
             <Edit />
+          </AuthWrapper>
+        ),
+      },
+      {
+        path: "/resume/:resumeId/view",
+        element: (
+          <AuthWrapper isProtected={false}>
+            <View />
           </AuthWrapper>
         ),
       },

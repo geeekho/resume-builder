@@ -23,3 +23,13 @@ export const fetchResumeById = async (token, id) => {
   }
   return data;
 };
+
+export const fetchPublicResumeById = async (id) => {
+  const supabase = supabaseClient("");
+
+  const { data, error } = await supabase.rpc("get_user_resume_content", {
+    p_resume_id: id,
+  });
+  if (!!error) throw new Error(error.message);
+  return data;
+};

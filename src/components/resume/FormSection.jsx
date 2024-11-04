@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowRight, Home, LayoutGrid } from "lucide-react";
+import { ArrowLeft, ArrowRight, Eye, Home, LayoutGrid } from "lucide-react";
 import PersonalDetails from "../forms/PersonalDetails";
 import { Button } from "../ui/button";
 import { useMemo, useState } from "react";
@@ -6,13 +6,17 @@ import Summary from "../forms/Summary";
 import ProfessionalExperience from "../forms/ProfessionalExperience";
 import Education from "../forms/Education";
 import Skills from "../forms/Skills";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
+
+const SECTION_LENGTH = 6;
 
 const FormSection = () => {
   const [activeFormIndex, setActiveFormIndex] = useState(1);
 
+  const { resumeId } = useParams();
+
   const changeIndex = (value) => {
-    if (value <= 0 || value > 5) return;
+    if (value <= 0 || value > SECTION_LENGTH) return;
     setActiveFormIndex(value);
   };
   const renderForm = useMemo(() => {
@@ -33,11 +37,14 @@ const FormSection = () => {
       case 5:
         elm = <Skills />;
         break;
+      case 6:
+        elm = <Navigate to={`/resume/${resumeId}/view`} />;
+        break;
       default:
         break;
     }
     return elm;
-  }, [activeFormIndex]);
+  }, [activeFormIndex, resumeId]);
 
   return (
     <div className="relative h-full w-full">
@@ -65,12 +72,20 @@ const FormSection = () => {
             </Button>
           )}
           <Button
-            disabled={activeFormIndex === 5}
+            disabled={activeFormIndex === SECTION_LENGTH}
             className="flex gap-2"
             size="sm"
             onClick={() => changeIndex(activeFormIndex + 1)}
           >
-            Next <ArrowRight />
+            {activeFormIndex === SECTION_LENGTH - 1 ? (
+              <>
+                View <Eye />
+              </>
+            ) : (
+              <>
+                Next <ArrowRight />
+              </>
+            )}
           </Button>
         </div>
       </div>
