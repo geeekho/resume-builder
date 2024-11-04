@@ -31,7 +31,7 @@ const ResumeBuilder = () => {
         className={`grid transform grid-cols-1 gap-10 transition-all md:grid-cols-2 ${state.loading ? "blur-sm" : ""}`}
       >
         {/* Form Section */}
-        <FormSection resumeInfo={state} />
+        <FormSection resumeInfo={state} dispatch={dispatch} />
         {/* Preview Section */}
         <ResumePreview resumeInfo={state} />
       </div>

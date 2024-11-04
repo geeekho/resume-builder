@@ -7,10 +7,11 @@ import ProfessionalExperience from "../forms/ProfessionalExperience";
 import Education from "../forms/Education";
 import Skills from "../forms/Skills";
 import { Link, Navigate, useParams } from "react-router-dom";
+import { ColotPicker } from "../custom/ColorPicker";
 
 const SECTION_LENGTH = 6;
 
-const FormSection = () => {
+const FormSection = ({ resumeInfo, dispatch }) => {
   const [activeFormIndex, setActiveFormIndex] = useState(1);
 
   const { resumeId } = useParams();
@@ -55,9 +56,10 @@ const FormSection = () => {
               <Home />
             </Button>
           </Link>
-          <Button variant="outline" className="flex gap-2" size="sm">
+          <ColotPicker resumeInfo={resumeInfo} dispatch={dispatch} />
+          {/* <Button variant="outline" className="flex gap-2" size="sm" >
             <LayoutGrid /> Theme
-          </Button>
+          </Button> */}
         </div>
 
         <div className="flex gap-2">
